@@ -28,6 +28,18 @@ class SampleController
                 fileHelper.deleteFile(`/uploads/${req.file.filename}`);
                 return res.status(400).json({ message: "El nombre y la categoría son obligatorios." });
             }
+            //VALIDACION DEL BPM: Debe ser un numero entre 20 y 300
+            //Se rechazan valores negativos, cero, texto o campos fuera de rango
+            const bpmNum = parseInt(bpm);
+
+                if (isNaN(bpmNum) || bpmNum < 20 || bpmNum > 300)
+                {
+                    fileHelper.deleteFile(`/uploads/${req.file.filename}`);
+
+                    return res.status(400).json({
+                        message: "BPM inválido. Ingrese un valor numérico correcto"
+                    });
+                }
 
             const userId = req.userId; // Proveniente del verifyToken
             const filename = req.file.filename;
@@ -39,7 +51,7 @@ class SampleController
                 filename,
                 display_name,
                 category,
-                bpm: parseInt(bpm) || 0,
+                bpm: bpmNum,
                 file_path: filePath
             });
 
