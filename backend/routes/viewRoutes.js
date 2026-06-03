@@ -10,18 +10,18 @@ const router = express.Router();
 /**
  * Módulo/Biblioteca para el manejo de rutas:
  */
-const path = require('path');
+const path = require('path');git
 
 // --- Rutas de Navegación del Frontend HTML ---
 
-// Al entrar a http://localhost:3000/ cargamos login
+// Al entrar a http://localhost:3000/ cargamos el laboratorio de pruebas
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/html/login.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
 });
 
-// Rutas amigables para las pantallas:
+// Rutas amigables para las pantallas (Apuntando a tests.html temporalmente):
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/html/login.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
 });
 
 router.get('/register', (req, res) => {
@@ -40,7 +40,7 @@ router.get('/admin-dashboard', (req, res) => {
  * @refactoring poner condición para cuando pide un archivo y no una uri
  * Captura de rutas inexistentes (404)
  * Si el usuario intenta acceder a una ruta que no existe,
- * se lo redirige automáticamente al login por seguridad y UX.
+ * se lo redirige automáticamente al panel de tests por seguridad y UX.
  */
 router.use((req, res) => {
     // Si la petición pide un archivo (tiene extensión), mejor devolver un 404 seco
@@ -49,8 +49,8 @@ router.use((req, res) => {
         return res.status(404).send('Recurso no encontrado');
     }
 
-    // Si es una ruta de navegación (ej: /loquesea), servimos el login
-    res.status(404).sendFile(path.join(__dirname, '../../frontend/html/login.html'));
+    // Si es una ruta de navegación falsa, servimos los tests en vez del login
+    res.status(404).sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
 });
 
 module.exports = router;
