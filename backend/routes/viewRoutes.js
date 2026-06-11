@@ -10,7 +10,7 @@ const router = express.Router();
 /**
  * Módulo/Biblioteca para el manejo de rutas:
  */
-const path = require('path');git
+const path = require('path');
 
 // --- Rutas de Navegación del Frontend HTML ---
 
