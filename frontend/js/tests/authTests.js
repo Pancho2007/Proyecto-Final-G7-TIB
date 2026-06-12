@@ -26,7 +26,11 @@ testUtils.createTestButton("Test Login - Password Incorrecto (Pepe y 123)", asyn
     const data = await response.json();
     testUtils.log(data);
 
-    if (response.status===401) {
+<<<<<<< HEAD
+    if (response.status === 401) {
+=======
+    if (response.status === 401) {
+>>>>>>> main
         testUtils.setSuccess(btn);
     }
 });
@@ -41,7 +45,11 @@ testUtils.createTestButton("Test Login - Usuario Incorrecto (Juan y 12345)", asy
     const data = await response.json();
     testUtils.log(data);
 
-    if (response.status===401) {
+<<<<<<< HEAD
+    if (response.status === 401) {
+=======
+    if (response.status === 401) {
+>>>>>>> main
         testUtils.setSuccess(btn);
     }
 });
