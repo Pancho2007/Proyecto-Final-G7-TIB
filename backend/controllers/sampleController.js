@@ -83,10 +83,6 @@ class SampleController
 
             // 1. Obtener metadatos para conocer la ruta del archivo físico
             const sample = await sampleRepo.findById(id, userId);
-            
-            if (!sample) {
-                return res.status(404).json({ message: "El sample no existe o no tienes permisos para eliminarlo." });
-            }
 
             // 2. Ejecutar sp_delete_sample en la base de datos
             await sampleRepo.delete(id, userId);
