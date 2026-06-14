@@ -61,3 +61,23 @@ testUtils.createTestButton("Test Subir Sample (Simulado)", async (btn) => {
     testUtils.log(data);
     if (response.ok) testUtils.setSuccess(btn);
 });
+
+
+/**
+ * Test: DELETE /api/samples/99999 - Borrado Fantasma (HTTP 404 Not Found)
+ */
+testUtils.createTestButton("Test Borrado Fantasma (ID invalido 99999)", async (btn) => {
+    // 1. Asegurar y guardar una sesión válida
+    await okLogin();
+    const token = localStorage.getItem('test_token');
+    
+    // 2. Intentar borrar un ID que no existe 
+    const response = await fetch('/api/samples/99999', {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+   
+    const data = await response.json();
+    testUtils.log(data);
+    if (response.status === 404) testUtils.setSuccess(btn);
+});
