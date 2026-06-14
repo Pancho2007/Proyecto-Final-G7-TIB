@@ -98,6 +98,10 @@ class SampleController
         }
         catch (error)
         {
+            if (error.message === 'BORRADO_FANTASMA')
+            {
+                return res.status(404).json({ message: "El registro no existe o ya fue eliminado."});
+            }
             res.status(500).json({ message: "Error al eliminar el sample.", error: error.message });
         }
     }
