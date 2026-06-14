@@ -61,3 +61,36 @@ testUtils.createTestButton("Test Subir Sample (Simulado)", async (btn) => {
     testUtils.log(data);
     if (response.ok) testUtils.setSuccess(btn);
 });
+/**
+ *Test: Manipulación del Token JWT
+ */
+testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
+
+    // 1) Obtener token válido
+    await okLogin();
+
+    const token =
+        localStorage.getItem('test_token');
+
+    // 2) Alterar un carácter
+    const badToken =
+        token.slice(0, -1) + 'X';
+
+    // 3) Intentar acceder a una ruta protegida
+    const response =
+        await fetch('/api/samples/my-samples', {
+            headers: {
+                'Authorization':
+                    `Bearer ${badToken}`
+            }
+        });
+
+    const data =
+        await response.json();
+
+    testUtils.log(data);
+
+    // 4) El éxito es que falle
+    if(response.status === 401)
+        testUtils.setSuccess(btn);
+});

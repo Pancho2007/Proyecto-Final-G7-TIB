@@ -36,8 +36,7 @@ const authMiddleware = {
         const pureToken = authHeader.split(" ")[1];
 
         jwt.verify(pureToken, SECRET_KEY, (err, decoded) => {
-            if (err) return res.status(401).json({ message: "Token inválido o expirado." });
-            
+            if (err) return res.status(401).json({ message: "Token inválido o expirado." });      
             // Guardamos la info del usuario decodificada en el request para usarla después:
             req.userId = decoded.id;
             req.userRole = decoded.role; // Extraemos el rol del token
@@ -46,7 +45,7 @@ const authMiddleware = {
     },
 
     // 2. Verifica si el usuario tiene privilegios de Admin
-    // Importante: Este middleware debe ir DESPUÉS de verifyToken en las rutas
+    // Importante: Este middleware debe ir DEsuUÉS de verifyToken en las rutas
     isAdmin: (req, res, next) => {
         const roles = req.userRole; // Esto puede ser un string "admin" o un array ["producer", "admin"]
 
