@@ -36,7 +36,7 @@ const authMiddleware = {
         const pureToken = authHeader.split(" ")[1];
 
         jwt.verify(pureToken, SECRET_KEY, (err, decoded) => {
-            if (err) return res.status(401).json({ message: "Token inválido o expirado." });      
+            if (err) return res.status(401).json({ message: "Sesión inválida o corrompida. Vuelva a iniciar sesión." });      
             // Guardamos la info del usuario decodificada en el request para usarla después:
             req.userId = decoded.id;
             req.userRole = decoded.role; // Extraemos el rol del token
