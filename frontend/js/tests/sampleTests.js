@@ -70,7 +70,7 @@ testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
     await okLogin();
 
     const token =
-        localStorage.getItem('test_token');
+        localStorage.getItem('token');
 
     // 2) Alterar un carácter
     const badToken =
@@ -93,6 +93,7 @@ testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
     // 4) El éxito es que falle
     if(response.status === 401)
         testUtils.setSuccess(btn);
+});
 
 /**
  * Test: Validación 6 - BPM inválido (HTTP 400)
