@@ -22,6 +22,14 @@ class SampleController
             }
 
             const { display_name, category, bpm } = req.body;
+            // VALIDACION DEL BPM: Debe ser un numero entre 20 y 300
+            const bpmNum = parseInt(bpm);
+            if (isNaN(bpmNum) || bpmNum < 20 || bpmNum > 300) {
+                fileHelper.deleteFile(`/uploads/${req.file.filename}`);
+                return res.status(400).json({ 
+                    message: "BPM inválido. Ingrese un valor numérico correcto" 
+                });
+            }
             
             if (!display_name || !category) {
                 // Si faltan datos, eliminamos el archivo físico para no dejar basura (Storage Efficiency)
@@ -39,7 +47,7 @@ class SampleController
                 filename,
                 display_name,
                 category,
-                bpm: parseInt(bpm) || 0,
+                bpm: bpmNum,
                 file_path: filePath
             });
 
@@ -83,10 +91,6 @@ class SampleController
 
             // 1. Obtener metadatos para conocer la ruta del archivo físico
             const sample = await sampleRepo.findById(id, userId);
-            
-            if (!sample) {
-                return res.status(404).json({ message: "El sample no existe o no tienes permisos para eliminarlo." });
-            }
 
             // 2. Ejecutar sp_delete_sample en la base de datos
             await sampleRepo.delete(id, userId);
@@ -98,6 +102,10 @@ class SampleController
         }
         catch (error)
         {
+            if (error.message === 'BORRADO_FANTASMA')
+            {
+                return res.status(404).json({ message: "El registro no existe o ya fue eliminado."});
+            }
             res.status(500).json({ message: "Error al eliminar el sample.", error: error.message });
         }
     }
