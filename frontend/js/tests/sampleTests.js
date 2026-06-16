@@ -89,7 +89,7 @@ testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
     await okLogin();
 
     const token =
-        localStorage.getItem('token');
+        localStorage.getItem('test_token');
 
     // 2) Alterar un carácter
     const badToken =
@@ -120,7 +120,7 @@ testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
 testUtils.createTestButton("Test Subir Sample - BPM Inválido (-15)", async (btn) => {
     // 1. Asegurar sesión válida
     await okLogin();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('test_token');
 
     // 2. Armar FormData con BPM ilógico
     const formData = new FormData();
