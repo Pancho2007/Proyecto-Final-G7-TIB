@@ -93,4 +93,36 @@ testUtils.createTestButton("Manipulación del Token JWT", async (btn) => {
     // 4) El éxito es que falle
     if(response.status === 401)
         testUtils.setSuccess(btn);
+
+/**
+ * Test: Validación 6 - BPM inválido (HTTP 400)
+ */
+testUtils.createTestButton("Test Subir Sample - BPM Inválido (-15)", async (btn) => {
+    // 1. Asegurar sesión válida
+    await okLogin();
+    const token = localStorage.getItem('token');
+
+    // 2. Armar FormData con BPM ilógico
+    const formData = new FormData();
+    formData.append('display_name', 'Test BPM Invalido');
+    formData.append('category', 'Drums');
+    formData.append('bpm', '-15');
+
+    const blob = new Blob(["Simulated Audio Content"], { type: 'audio/wav' });
+    formData.append('audioFile', blob, 'TEST_BPM_INVALIDO.wav');
+
+    // 3. Enviar la petición
+    const response = await fetch('/api/samples/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+    });
+
+    const data = await response.json();
+    testUtils.log(data);
+
+    // 4. Exitoso si el servidor rechaza con 400
+    if (response.status === 400) {
+        testUtils.setSuccess(btn);
+    }
 });
