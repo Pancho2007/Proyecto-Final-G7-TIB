@@ -68,7 +68,7 @@ testUtils.createTestButton("Test Subir Sample (Simulado)", async (btn) => {
 testUtils.createTestButton("Test Subir Sample - BPM Inválido (-15)", async (btn) => {
     // 1. Asegurar sesión válida
     await okLogin();
-    const token = localStorage.getItem('test_token');
+    const token = localStorage.getItem('token');
 
     // 2. Armar FormData con BPM ilógico
     const formData = new FormData();
