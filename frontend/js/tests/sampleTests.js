@@ -80,6 +80,7 @@ testUtils.createTestButton("Test Borrado Fantasma (ID invalido 99999)", async (b
     const data = await response.json();
     testUtils.log(data);
     if (response.status === 404) testUtils.setSuccess(btn);
+});
 /**
  *Test: Manipulación del Token JWT
  */
