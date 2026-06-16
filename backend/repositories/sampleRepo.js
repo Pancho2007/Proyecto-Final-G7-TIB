@@ -34,10 +34,15 @@ class SampleRepository
         return rows[0][0]; 
     }
 
-    // Eliminar un sample validando la propiedad del mismo
+   // Eliminar un sample validando la propiedad del mismo
     async delete(id, userId) 
     {
-        await db.execute('CALL sp_delete_sample(?, ?)', [id, userId]);
+        const [result] = await db.execute('CALL sp_delete_sample(?, ?)', [id, userId]);
+        const affectedRows = result[0]?.affectedRows ?? 0;
+        if (affectedRows === 0) 
+        {
+            throw new Error('BORRADO_FANTASMA');
+        }
         return true;
     }
 }
