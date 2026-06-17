@@ -46,10 +46,7 @@ testUtils.createTestButton("Test Register - Password demasiado corta", async (bt
     const response = await fetch('/api/auth/register',{
         method: 'POST',
         headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            username:'usuarioPrueba123',
-            password: '123'
-        })
+        body: JSON.stringify({ username:'juancruz', password: '123'})
     });
     const data = await response.json();
     testUtils.log(data);
