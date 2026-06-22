@@ -18,5 +18,11 @@ const path = require('path');
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
 });
+router.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/html/login.html'));
+});
 
+router.get('/producer-dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/html/producer-dashboard.html'));
+});
 module.exports = router;
