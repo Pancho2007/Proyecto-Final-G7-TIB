@@ -29,9 +29,11 @@ const apiService = {
         const result = await response.json();
 
         // Si el token expiró (401), forzamos logout automático
-        if (response.status === 401) authHelper.logout();
-
-        if (!response.ok) throw new Error(result.message || 'Error en la petición');
-        return result;
+       if (!response.ok) {
+    const error = new Error(result.message || 'Error en la petición');
+    error.status = response.status;
+    throw error;
+}
+return result;
     }
 };

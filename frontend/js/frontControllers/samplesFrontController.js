@@ -13,7 +13,11 @@ async function loadSamples() {
         const samples = await apiService.request('/samples/my-samples', 'GET');
         renderSamplesTable(samples);
     } catch (error) {
-        showModal('Error', 'No se pudieron cargar los samples: ' + error.message);
+        if (error.status === 401) {
+            showModal('Sesión inválida', error.message);
+        } else {
+            showModal('Error', 'No se pudieron cargar los samples: ' + error.message);
+        }
     }
 }
 
