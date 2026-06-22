@@ -78,20 +78,28 @@ async function deleteSample(id) {
 const uploadForm = document.getElementById('uploadForm');
 if (uploadForm) {
     uploadForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('display_name', document.getElementById('display_name').value);
-        formData.append('category', document.getElementById('category').value);
-        formData.append('bpm', document.getElementById('bpm').value);
-        formData.append('audioFile', document.getElementById('audioFile').files[0]);
+    e.preventDefault();
 
-        try {
-            await apiService.request('/samples/upload', 'POST', formData, true);
-            showModal('Éxito', 'Sample guardado.');
-            uploadForm.reset();
-            loadSamples();
-        } catch (error) {
-            showModal('Error al subir', error.message);
-        }
-    });
+    // Validación en el FRONTEND: cortamos antes de mandar la petición al backend
+    const bpm = parseInt(document.getElementById('bpm').value, 10);
+    if (isNaN(bpm) || bpm < 20 || bpm > 300) {
+        showModal('Error de validación', 'El BPM debe ser un número entre 20 y 300.');
+        return; // no sigue, no se llama al backend
+    }
+
+    const formData = new FormData();
+    formData.append('display_name', document.getElementById('display_name').value);
+    formData.append('category', document.getElementById('category').value);
+    formData.append('bpm', bpm);
+    formData.append('audioFile', document.getElementById('audioFile').files[0]);
+
+    try {
+        await apiService.request('/samples/upload', 'POST', formData, true);
+        showModal('Éxito', 'Sample guardado.');
+        uploadForm.reset();
+        loadSamples();
+    } catch (error) {
+        showModal('Error al subir', error.message);
+    }
+});
 }
