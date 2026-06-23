@@ -14,14 +14,14 @@ const path = require('path');
 
 // --- Rutas de Navegación del Frontend HTML ---
 
-// Al entrar a http://localhost:3000/ cargamos el laboratorio de pruebas
+// Al entrar a http://localhost:3000/ cargamos la pantalla de login real
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/html/login.html'));
 });
 
-// Rutas amigables para las pantallas (Apuntando a tests.html temporalmente):
+// Rutas amigables para las pantallas:
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/html/tests.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/html/login.html'));
 });
 
 router.get('/register', (req, res) => {
