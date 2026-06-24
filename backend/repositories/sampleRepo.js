@@ -38,7 +38,7 @@ class SampleRepository
     async delete(id, userId) 
     {
         const [result] = await db.execute('CALL sp_delete_sample(?, ?)', [id, userId]);
-        const affectedRows = result[0]?.affectedRows ?? 0;
+        const affectedRows = result?.affectedRows ?? 0;
         if (affectedRows === 0) 
         {
             throw new Error('BORRADO_FANTASMA');

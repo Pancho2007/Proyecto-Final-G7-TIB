@@ -34,7 +34,7 @@
                     </select>
 
                     <label class="w3-margin-top w3-show">BPM</label>
-                    <input class="w3-input w3-border w3-round w3-transparent w3-text-white" type="number" id="bpm" min="20" max="300" placeholder="Entre 20 y 300" required>
+                    <input class="w3-input w3-border w3-round w3-transparent w3-text-white" type="number" id="bpm" placeholder="Entre 20 y 300">
 
                     <label class="w3-margin-top w3-show">Archivo de Audio (WAV/MP3)</label>
                     <input class="w3-input w3-border w3-round" type="file" id="audioFile" accept="audio/*" required>
@@ -64,7 +64,24 @@
                 </table>
             </div>
         </div>
-
+         <div class="w3-col l8 m7 s12 w3-margin-top w3-hide" id="recentlyDeletedSection">
+            <h3 class="w3-text-white">Eliminados Recientemente</h3>
+            <div class="w3-responsive">
+                <table class="w3-table w3-striped w3-bordered vault-card">
+                    <thead>
+                        <tr class="w3-yellow">
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>BPM</th>
+                            <th>Escuchar</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentlyDeletedTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>                                                      
     </div>
 </div>
 
