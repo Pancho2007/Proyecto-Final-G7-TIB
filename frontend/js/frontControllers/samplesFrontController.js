@@ -17,11 +17,9 @@ async function loadSamples() {
     }
 }
 
-function renderSamplesTable(samples) {
-    const tbody = document.getElementById('samplesTableBody');
-    tbody.replaceChildren(); // Limpia el contenido de forma eficiente
+let recentlyDeleted = [];
 
-    samples.forEach(s => {
+function buildSampleRow(s) {
         const row = document.createElement('tr');
 
         // Celda Nombre
@@ -54,26 +52,47 @@ function renderSamplesTable(samples) {
         const btnDelete = document.createElement('button');
         btnDelete.className = 'w3-button w3-red w3-tiny w3-round';
         btnDelete.textContent = 'Borrar';
-        btnDelete.addEventListener('click', () => deleteSample(s.id));
+        btnDelete.addEventListener('click', () => deleteSample(s));
         tdActions.appendChild(btnDelete);
 
         // Armar fila
         row.append(tdName, tdCat, tdBpm, tdAudio, tdActions);
-        tbody.appendChild(row);
-    });
+        return row;
+    };
+
+function renderSamplesTable(samples) {
+    const tbody = document.getElementById('samplesTableBody');
+    tbody.replaceChildren(); // Limpia el contenido de forma eficiente
+
+    samples.forEach(s => tbody.appendChild(buildSampleRow(s)));
 }
 
-async function deleteSample(id) {
-    if (!confirm('¿Estás seguro de eliminar este sonido?')) return;
-    try {
-        await apiService.request(`/samples/${id}`, 'DELETE');
-        showModal('Eliminado', 'El sample ha sido borrado.');
-        loadSamples();
-    } catch (error) {
-        showModal('Error', error.message);
+function renderRecentlyDeletedTable() {
+    const tbody = document.getElementById('recentlyDeletedTableBody');
+    tbody.replaceChildren();
+    recentlyDeleted.forEach(s => tbody.appendChild(buildSampleRow(s)));
+
+    const section = document.getElementById('recentlyDeletedSection');
+    if (recentlyDeleted.length > 0) {
+        section.classList.remove('w3-hide');
+    } else {
+        section.classList.add('w3-hide');
     }
 }
 
+async function deleteSample(sample) {
+    if (!confirm('¿Estás seguro de eliminar este sonido?')) return;
+    try {
+        await apiService.request(`/samples/${sample.id}`, 'DELETE');
+        showModal('Eliminado', 'El sample ha sido borrado.');
+        recentlyDeleted.unshift(sample);
+        renderRecentlyDeletedTable();
+        loadSamples();
+    } catch (error) {
+        showModal('Aviso', error.message);
+    }
+}
+ 
 // Evento para el formulario de subida
 const uploadForm = document.getElementById('uploadForm');
 if (uploadForm) {
